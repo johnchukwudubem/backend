@@ -1,21 +1,16 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
+const userRoutes = require("./Routes/user");
 const connectDB = require("./config/db");
+const bodyParser = require("body-parser");
 const Color = require("colors");
-
 const app = express();
-connectDB()
-const ports = process.env.PORT || 4000;
+connectDB();
+const port = process.env.port;
 
-
-
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
-
-app.get("/get", (req, res) => {
-  res.json(ProductInfo);
-});
-
-app.listen(ports, () => console.log(`server running on port ${ports}`.yellow));
-    
+app.use(cors());
+app.use(bodyParser.json());
+app.use("/user", userRoutes);
+app.listen(port, () => console.log(`server runnimg on port ${port}`.yellow));
+app.use(express.json);
